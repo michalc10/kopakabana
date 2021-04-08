@@ -1,0 +1,194 @@
+﻿<Window x:Class="Kopakabana.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kopakabana"
+        mc:Ignorable="d"
+        Title="Kopakabana" Height="450" Width="820" MinHeight="340"  MinWidth="820" Closing="Window_Closing">
+    <Window.Resources>
+        <RoutedUICommand x:Key="SaveCommand"></RoutedUICommand>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource SaveCommand}" Executed="SaveMenuButton_Click"></CommandBinding>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Command="{StaticResource SaveCommand}" Modifiers="Ctrl" Key="S"/>
+    </Window.InputBindings>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+        <MenuItem Header="_Plik">
+                <MenuItem x:Name="LoadMenuButton" Header="_Wczytaj" Click="LoadMenuButton_Click"/>
+                <MenuItem x:Name="SaveMenuButton" Header="_Zapisz" Click="SaveMenuButton_Click" InputGestureText="CTRL+S"/>
+                <MenuItem x:Name="SaveAsMenuButton" Header="_Zapisz jako..." Click="SaveAsMenuButton_Click"/>
+                <MenuItem x:Name="ExitMenuButton" Header="_Wyjdź" Click="ExitMenuButton_Click"/>
+        </MenuItem>
+    </Menu>
+    <TabControl>
+        <TabItem Header="Zarządzanie sędziami">
+            <Grid Background="#FFE5E5E5">
+                <DataGrid x:Name="RefereeGrid" ItemsSource="{Binding}" Margin="0,0,150,0" CanUserReorderColumns="False" ColumnWidth="SizeToCells" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" SelectionChanged="RefereeGrid_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" CanUserReorder="False" MinWidth="30"/>
+                        <DataGridTextColumn Header="Imię" Binding="{Binding Name}" CanUserReorder="False" MinWidth="70"/>
+                        <DataGridTextColumn Header="Nazwisko" Binding="{Binding Surname}" CanUserReorder="False" MinWidth="100"/>
+                        <DataGridTextColumn Header="Wiek" Binding="{Binding Age}" CanUserReorder="False" Width="*" MinWidth="50"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button x:Name="AddRefereeButton"  Margin="0,5,5,0" Content="Dodaj" HorizontalAlignment="Right" VerticalAlignment="Top" Click="AddRefereeButton_Click" Width="140"/>
+                <Button x:Name="EditRefereeButton"  Margin="0,30,5,0" Content="Edytuj" HorizontalAlignment="Right" VerticalAlignment="Top" Click="EditRefereeButton_Click" Width="140" IsEnabled="False"/>
+                <Button x:Name="DeleteRefereeButton"  Margin="0,55,5,0" Content="Usuń" HorizontalAlignment="Right" VerticalAlignment="Top" Click="DeleteRefereeButton_Click" Width="140" IsEnabled="False"/>
+                <CheckBox x:Name="SafeRefereeCheckbox" Content="Bezpieczne usuwanie" HorizontalAlignment="Right" Margin="0,80,5,0" VerticalAlignment="Top" Width="140" Height="17" IsChecked="True"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Zarządzanie drużynami" >
+            <Grid Background="#FFE5E5E5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="400" Width="*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition MinWidth="400" Width="*" />
+                </Grid.ColumnDefinitions>
+                <DataGrid x:Name="TeamsDataGrid" Margin="0 0 0 32" ItemsSource="{Binding}" CanUserReorderColumns="False" ColumnWidth="SizeToCells" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" Grid.Column="0" SelectionMode="Single" SelectionChanged="TeamsDataGrid_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" MinWidth="30"/>
+                        <DataGridTextColumn Header="Nazwa drużyny" Binding="{Binding Name}" Width="300" MinWidth="150"/>
+                        <DataGridTextColumn Header="Sport" Binding="{Binding TypeOfSportAsString}" Width="*" MinWidth="95"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button x:Name="AddTeamButton"  Margin="5,0,0,5" Content="Zgłoś drużynę" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddTeamButton_Click" Width="100" Grid.Column="0" />
+                <Button x:Name="EditTeamButton"  Margin="110,0,0,5" Content="Edytuj drużynę" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="EditTeamButton_Click" Width="100" Grid.Column="0" IsEnabled="False" />
+                <Button x:Name="DeleteTeamButton"  Margin="215,0,0,5" Content="Wycofaj drużynę" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="DeleteTeamButton_Click" Width="100" Grid.Column="0" IsEnabled="False" />
+                <CheckBox x:Name="SafeTeamCheckbox" HorizontalAlignment="Left" Margin="320,0,0,5" VerticalAlignment="Bottom" IsChecked="True" Grid.Column="0" VerticalContentAlignment="Center">
+                    <TextBlock Text="Bezpieczne usuwanie" TextWrapping="Wrap" FontSize="10" Height="26"/>
+                </CheckBox>
+                <DataGrid x:Name="MembersDataGrid" Margin="0 0 0 32" ItemsSource="{Binding}" CanUserReorderColumns="False" ColumnWidth="SizeToCells" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" Grid.Column="2" SelectionChanged="MembersDataGrid_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" CanUserReorder="False" MinWidth="30"/>
+                        <DataGridTextColumn Header="Imię" Binding="{Binding Name}" CanUserReorder="False" MinWidth="70"/>
+                        <DataGridTextColumn Header="Nazwisko" Binding="{Binding Surname}" CanUserReorder="False" MinWidth="100"/>
+                        <DataGridTextColumn Header="Wiek" Binding="{Binding Age}" CanUserReorder="False" Width="*" MinWidth="50"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Label x:Name="ChooseTeamInfoLabel" Content="⇐ Wybierz drużynę, aby zobaczyć listę członków" Grid.Column="2" HorizontalAlignment="Left" Margin="5,30,0,0" VerticalAlignment="Top"/>
+                <Border x:Name="NumberOfMembersTextBlockParent" Grid.Column="2" HorizontalAlignment="Right" Background="White" Margin="0,0,20,35" VerticalAlignment="Bottom" BorderThickness="1,1,1,1" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Visibility="Hidden">
+                    <TextBlock x:Name="NumberOfMembersTextBlock"  Background="White" Margin="2,2,2,2">
+                    <Run Text="Liczba członków: "/>
+                    <Run Text="{Binding CurrentSize, Mode=OneWay}"/>
+                    <Run Text="/"/>
+                    <Run Text="{Binding MaxSize, Mode=OneWay}"/>
+                    </TextBlock>
+                </Border>
+                <Button x:Name="AddMemberButton"  Margin="5,0,0,5" Content="Dodaj członka" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddMemberButton_Click" Width="100" Grid.Column="2" IsEnabled="False" />
+                <Button x:Name="EditMemberButton"  Margin="110,0,0,5" Content="Edytuj członka" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="EditTMemberButton_Click" Width="100" Grid.Column="2" IsEnabled="False" />
+                <Button x:Name="DeleteMemberButton"  Margin="215,0,0,5" Content="Usuń członka" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="DeleteMemberButton_Click" Width="100" Grid.Column="2" IsEnabled="False" />
+                <CheckBox x:Name="SafeMemberCheckbox" HorizontalAlignment="Left" Margin="320,0,0,5" VerticalAlignment="Bottom" IsChecked="True" Grid.Column="2" VerticalContentAlignment="Center">
+                    <TextBlock Text="Bezpieczne usuwanie" TextWrapping="Wrap" FontSize="10" Height="26"/>
+                </CheckBox>
+                <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="5"/>
+
+            </Grid>
+        </TabItem>
+        <TabItem Header="Zarządzanie turniejami" >
+            <Grid Background="#FFE5E5E5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="260" Width="*"/>
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition MinWidth="400" Width="600*" />
+                </Grid.ColumnDefinitions>
+                <DataGrid x:Name="TournamentsDataGrid" Margin="0,0,0,57" ItemsSource="{Binding}" CanUserReorderColumns="False" ColumnWidth="SizeToCells" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" Grid.Column="0" SelectionMode="Single" SelectionChanged="TournamentsDataGrid_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" MinWidth="30"/>
+                        <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}" MinWidth="100"/>
+                        <DataGridTextColumn Header="Sport" Binding="{Binding TypeOfSportAsString}" Width="*" MinWidth="95"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button x:Name="AddTournamentButton"  Margin="5,0,0,32" Content="Dodaj turniej" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddTournamentButton_Click" Width="100" Grid.Column="0" />
+                <Button x:Name="EditTournamentButton"  Margin="110,0,0,32" Content="Edytuj turniej" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="EditTournamentButton_Click" Width="100" Grid.Column="0" IsEnabled="False"/>
+                <Button x:Name="DeleteTournamentButton"  Margin="5,0,0,5" Content="Usuń turniej" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="DeleteTournamentutton_Click" Width="100" Grid.Column="0" IsEnabled="False"/>
+                <CheckBox x:Name="SafeTournamentCheckbox" HorizontalAlignment="Left" Margin="110,0,0,5" VerticalAlignment="Bottom" IsChecked="True" Grid.Column="0" VerticalContentAlignment="Center" Width="100">
+                    <TextBlock Text="Bezpieczne usuwanie" TextWrapping="Wrap" FontSize="10" Height="26"/>
+                </CheckBox>
+                <DataGrid x:Name="MatchesDataGrid" Margin="0,0,0,200" ItemsSource="{Binding}" CanUserReorderColumns="False" ColumnWidth="SizeToCells" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" Grid.Column="2" SelectionChanged="MatchesDataGridRefreshButtons" GotFocus="MatchesDataGridRefreshButtons">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="dataGridTextColumn" Header="Id" Binding="{Binding Id}" CanUserReorder="False" MinWidth="30"/>
+                        <DataGridTextColumn Header="Drużyna 1" Binding="{Binding Team1.Name}" CanUserReorder="False" MinWidth="80"/>
+                        <DataGridTextColumn Header="Drużyna 2" Binding="{Binding Team2.Name}" CanUserReorder="False" MinWidth="80"/>
+                        <DataGridTextColumn Header="Data" Binding="{Binding Date, StringFormat='dd.MM.yyyy'}" CanUserReorder="False" MinWidth="70"/>
+                        <DataGridTextColumn Header="Godzina" Binding="{Binding Time}" CanUserReorder="False" MinWidth="55"/>
+                        <DataGridTextColumn Header="Sędzia/owie" CanUserReorder="False" MinWidth="90">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0} {1} {2} {3} {4} {5}">
+                                    <Binding Path="Referee.Name" TargetNullValue='' FallbackValue="" />
+                                    <Binding Path="Referee.Surname"  TargetNullValue='' FallbackValue=""/>
+                                    <Binding Path="AssistantReferee1.Name" TargetNullValue='' FallbackValue=""/>
+                                    <Binding Path="AssistantReferee1.Surname" TargetNullValue='' FallbackValue="" />
+                                    <Binding Path="AssistantReferee2.Name" TargetNullValue='' FallbackValue="" />
+                                    <Binding Path="AssistantReferee2.Surname" TargetNullValue='' FallbackValue=""/>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Wynik" Binding="{Binding Score}" CanUserReorder="False" Width="*" MinWidth="50"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Label Content="Półfinały: " Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,180" VerticalAlignment="Bottom"/>
+                <DataGrid x:Name="SemifinalsDataGrid" Margin="0,0,0,120" Height="65" VerticalAlignment="Bottom"  ItemsSource="{Binding}" CanUserReorderColumns="False" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" Grid.Column="2" SelectionChanged="SemifinalsDataGridRefreshButtons" GotFocus="SemifinalsDataGridRefreshButtons" SelectionMode="Single">
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" CanUserReorder="False"  MaxWidth="{Binding Columns[0].ActualWidth, ElementName=MatchesDataGrid}"/>
+                        <DataGridTextColumn Header="Drużyna 1" Binding="{Binding Team1.Name}" CanUserReorder="False" MinWidth="80"/>
+                        <DataGridTextColumn Header="Drużyna 2" Binding="{Binding Team2.Name}" CanUserReorder="False" MinWidth="80"/>
+                        <DataGridTextColumn Header="Data" Binding="{Binding Date, StringFormat='dd.MM.yyyy'}" CanUserReorder="False" MinWidth="70"/>
+                        <DataGridTextColumn Header="Godzina" Binding="{Binding Time}" CanUserReorder="False" MinWidth="55"/>
+                        <DataGridTextColumn Header="Sędzia/owie" CanUserReorder="False" MinWidth="90">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0} {1} {2} {3} {4} {5}">
+                                    <Binding Path="Referee.Name" TargetNullValue='' FallbackValue="" />
+                                    <Binding Path="Referee.Surname"  TargetNullValue='' FallbackValue=""/>
+                                    <Binding Path="AssistantReferee1.Name" TargetNullValue='' FallbackValue=""/>
+                                    <Binding Path="AssistantReferee1.Surname" TargetNullValue='' FallbackValue="" />
+                                    <Binding Path="AssistantReferee2.Name" TargetNullValue='' FallbackValue="" StringFormat="{},{0}"/>
+                                    <Binding Path="AssistantReferee2.Surname" TargetNullValue='' FallbackValue=""/>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Wynik" Binding="{Binding Score}" CanUserReorder="False" Width="*" MinWidth="50"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Label Content="Finał: " Grid.Column="2" HorizontalAlignment="Left" Margin="0,0,0,100" VerticalAlignment="Bottom"/>
+                <DataGrid x:Name="FinalDataGrid" Margin="0,0,0,60" Height="45" VerticalAlignment="Bottom"  ItemsSource="{Binding}" CanUserReorderColumns="False" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" Grid.Column="2" GotFocus="FinalDataGridRefreshButtons">
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" CanUserReorder="False"  MaxWidth="{Binding Columns[0].ActualWidth, ElementName=MatchesDataGrid}"/>
+                        <DataGridTextColumn Header="Drużyna 1" Binding="{Binding Team1.Name}" CanUserReorder="False" MinWidth="80"/>
+                        <DataGridTextColumn Header="Drużyna 2" Binding="{Binding Team2.Name}" CanUserReorder="False" MinWidth="80"/>
+                        <DataGridTextColumn Header="Data" Binding="{Binding Date, StringFormat='dd.MM.yyyy'}" CanUserReorder="False" MinWidth="70"/>
+                        <DataGridTextColumn Header="Godzina" Binding="{Binding Time}" CanUserReorder="False" MinWidth="55"/>
+                        <DataGridTextColumn Header="Sędzia/owie" CanUserReorder="False" MinWidth="90">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0} {1} {2} {3} {4} {5}">
+                                    <Binding Path="Referee.Name" TargetNullValue='' FallbackValue="" />
+                                    <Binding Path="Referee.Surname"  TargetNullValue='' FallbackValue=""/>
+                                    <Binding Path="AssistantReferee1.Name" TargetNullValue='' FallbackValue=""/>
+                                    <Binding Path="AssistantReferee1.Surname" TargetNullValue='' FallbackValue="" />
+                                    <Binding Path="AssistantReferee2.Name" TargetNullValue='' FallbackValue="" StringFormat="{},{0}"/>
+                                    <Binding Path="AssistantReferee2.Surname" TargetNullValue='' FallbackValue=""/>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Wynik" Binding="{Binding Score}" CanUserReorder="False" Width="*" MinWidth="50"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Label x:Name="ChooseTournamentInfoLabel" Content="⇐ Wybierz turniej, aby zobaczyć listę meczy" Grid.Column="2" HorizontalAlignment="Left" Margin="5,30,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="AddMatchButton"  Margin="5,0,0,32" Content="Dodaj mecz" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddMatchButton_Click" Width="100" Grid.Column="2" IsEnabled="False" />
+                <Button x:Name="EditMatchButton"  Margin="110,0,0,32" Content="Edytuj mecz" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="EditMatchButton_Click" Width="100" Grid.Column="2" IsEnabled="False"/>
+                <Button x:Name="DeleteMatchButton"  Margin="215,0,0,32" Content="Usuń mecz" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="DeleteMatchButton_Click" Width="100" Grid.Column="2" IsEnabled="False"/>
+                <CheckBox x:Name="SafeMatchCheckbox" HorizontalAlignment="Left" Margin="320,0,0,32" VerticalAlignment="Bottom" IsChecked="True" Width="100"  Grid.Column="2" VerticalContentAlignment="Center">
+                    <TextBlock Text="Bezpieczne usuwanie" TextWrapping="Wrap" FontSize="10" Height="26"/>
+                </CheckBox>
+                <Button x:Name="GenerateSeminifalsButton"  Margin="5,0,0,5" Content="Generuj półfinały" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="GenerateSemifinalsButton_Click" Width="100" Grid.Column="2" />
+                <Button x:Name="GenerateFinalButton"  Margin="110,0,0,5" Content="Generuj finał" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="GenerateFinalButton_Click" Width="100" Grid.Column="2" />
+                <Button x:Name="ShowTableButton"  Margin="215,0,0,5" Content="Pokaż tabelę" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="ShowTableButton_Click" Width="100" Grid.Column="2" />
+                <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="5"/>
+            </Grid>
+        </TabItem>
+    </TabControl>
+    </DockPanel>
+</Window>

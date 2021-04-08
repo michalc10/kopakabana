@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kopakabana", "Kopakabana.csproj", "{BEC5EB83-9C82-4327-9CE9-A5217C8D8714}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KopakabanaTests", "..\KopakabanaTests\KopakabanaTests.csproj", "{4A8B2363-27A5-4CEA-982B-71E2D24FAC50}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BEC5EB83-9C82-4327-9CE9-A5217C8D8714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEC5EB83-9C82-4327-9CE9-A5217C8D8714}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEC5EB83-9C82-4327-9CE9-A5217C8D8714}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEC5EB83-9C82-4327-9CE9-A5217C8D8714}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A8B2363-27A5-4CEA-982B-71E2D24FAC50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A8B2363-27A5-4CEA-982B-71E2D24FAC50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A8B2363-27A5-4CEA-982B-71E2D24FAC50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A8B2363-27A5-4CEA-982B-71E2D24FAC50}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {976432A0-2801-47EE-BB75-9508E15D76F1}
+	EndGlobalSection
+EndGlobal

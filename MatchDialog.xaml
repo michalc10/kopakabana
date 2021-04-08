@@ -1,0 +1,36 @@
+﻿<Window x:Class="Kopakabana.MatchDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kopakabana"
+        mc:Ignorable="d"
+        Title="MatchDialog" Height="360" Width="400" ContentRendered="Window_ContentRendered" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid>
+        <Label Content="Sport:" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top"/>
+        <Label Content="Drużyna 1:" HorizontalAlignment="Left" Margin="5,36,0,0" VerticalAlignment="Top"/>
+        <Label Content="Drużyna 2:" HorizontalAlignment="Left" Margin="5,67,0,0" VerticalAlignment="Top"/>
+        <Label Content="Data:" HorizontalAlignment="Left" Margin="5,98,0,0" VerticalAlignment="Top"/>
+        <Label Content="Godzina:" HorizontalAlignment="Left" Margin="5,129,0,0" VerticalAlignment="Top"/>
+        <Label Content="Sędzia:" HorizontalAlignment="Left" Margin="5,160,0,0" VerticalAlignment="Top"/>
+        <Label Content="Sędzia pomocniczy 1:" x:Name="AssistantReferee1Label" HorizontalAlignment="Left" Margin="5,191,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+        <Label Content="Sędzia pomocniczy 2:" x:Name="AssistantReferee2Label" HorizontalAlignment="Left" Margin="5,222,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+        <Label Content="Wynik:" x:Name="ScoreLabel" HorizontalAlignment="Left" Margin="5,191,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="SportComboBox" Margin="130,5,5,0" VerticalAlignment="Top" Height="26" ItemsSource="{Binding Sport}" IsEnabled="False">
+            <ComboBoxItem Content="Siatkówka" />
+            <ComboBoxItem Content="Dwa ognie"/>
+            <ComboBoxItem Content="Przeciąganie liny"/>
+        </ComboBox>
+        <ComboBox x:Name="Team1ComboBox" Margin="130,36,5,0" VerticalAlignment="Top" Height="26" SelectionChanged="Team1ComboBox_SelectionChanged" />
+        <ComboBox x:Name="Team2ComboBox" Margin="130,67,5,0" VerticalAlignment="Top" Height="26" SelectionChanged="Team2ComboBox_SelectionChanged" />
+        <DatePicker x:Name="Date" Margin="130,98,5,0" VerticalAlignment="Top" Height="26" SelectedDateFormat="Short" ToolTip="DD.MM.RRRR" />
+        <TextBox x:Name="TimeTextBox" Margin="130,129,5,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" LostFocus="TimeTextBox_LostFocus" ToolTip="GG:MM (np. 12:00)"/>
+        <ComboBox x:Name="RefereeComboBox" Margin="130,160,5,0" VerticalAlignment="Top" Height="26" ItemsSource="{Binding Sport}" SelectionChanged="RefereeComboBox_SelectionChanged"/>
+        <ComboBox x:Name="AssistantReferee1ComboBox" Margin="130,191,5,0" VerticalAlignment="Top" Height="26" Visibility="Hidden" SelectionChanged="AssistantReferee1ComboBox_SelectionChanged"/>
+        <ComboBox x:Name="AssistantReferee2ComboBox" Margin="130,222,5,0" VerticalAlignment="Top" Height="26" Visibility="Hidden" SelectionChanged="AssistantReferee2ComboBox_SelectionChanged"/>
+        <TextBox x:Name="ScoreTextBox" Margin="130,191,5,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26"  LostFocus="ScoreTextBox_LostFocus" ToolTip=" P - P (np. 2 - 2)"/>
+        <Button x:Name="CancelButton" IsCancel="True" Content="Anuluj" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="64"/>
+        <Button x:Name="OkButton" IsDefault="True"  Content="Ok" HorizontalAlignment="Right" Margin="0,0,79,10" VerticalAlignment="Bottom" Width="64" Click="OkButton_Click"/>
+        <Label x:Name="EmptyLabel" Content="Musisz podać przynajmniej drużyny i date!" Margin="5,0,148,7" VerticalAlignment="Bottom" Visibility="Hidden" />
+    </Grid>
+</Window>
